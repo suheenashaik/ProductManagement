@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/profile.css" />
+</head>
+<body>
+<div class="sidebar">
+    <a href="/publisher_Home">Home</a>
+    <a href="#">Create Products</a>
+    <a href="#">View Products</a>
+    <a href="#">View Orders</a>
+    <a id="profile-link" class="active" href="/profile">Profile</a>
+</div>
+
+<div class="card profileHeader">
+    <img class="userImg" src="images/user (1).png" alt="image">
+    <div class="userData">
+        <h3 style="margin-bottom: 0.2rem" id="fullName">John Doe</h3>
+        <small id="role">Publisher</small>
+    </div>
+</div>
+
+<div class="container userDetailsForm">
+    <form id="profileForm">
+        <label for="firstName"><b>First Name</b></label>
+        <input type="text" name="firstName" id="firstName" required />
+
+        <label for="lastName"><b>Last Name</b></label>
+        <input type="text" name="lastName" id="lastName" required />
+
+        <label for="mobileNumber"><b>Mobile Number</b></label>
+        <input type="number" name="mobileNumber" id="mobileNumber" required readonly />
+
+        <label for="email"><b>Email</b></label>
+        <input type="email" name="email" id="email" required />
+
+        <label for="address"><b>Address</b></label>
+        <input type="text" name="address" id="address" required />
+
+        <button type="submit" class="updateBtn">Update</button>
+    </form>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        function ViewProfile() {
+            const mobileNumber = localStorage.getItem('mobile');
+            if (!mobileNumber) {
+                alert('Mobile number not found. Please login again.');
+                window.location.href = '/login.html';
+                return;
+            }
+
+            fetch(`http://localhost:8090/profiles/viewProfile/${mobileNumber}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('firstName').value = data.firstName;
+                    document.getElementById('lastName').value = data.lastName;
+                    document.getElementById('mobileNumber').value = data.mobileNumber;
+                    document.getElementById('email').value = data.email;
+                    document.getElementById('address').value = data.address;
+                    document.getElementById('fullName').textContent = data.fullName;
+                    document.getElementById('role').textContent = data.role;
+                })
+                .catch(error => {
+                    console.error('Error fetching profile:', error);
+                    alert('Failed to fetch profile data.');
+                });
+        }
+
+        function updateProfile(event) {
+            event.preventDefault();
+            const profileData = {
+                firstName: document.getElementById('firstName').value,
+                lastName: document.getElementById('lastName').value,
+                mobileNumber: document.getElementById('mobileNumber').value,
+                email: document.getElementById('email').value,
+                address: document.getElementById('address').value,
+                role: document.getElementById('role').textContent
+            };
+
+            fetch('http://localhost:8090/profiles/updateProfile', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(profileData)
+            })
+                .then(response => response.text())
+                .then(message => {
+                    alert(message);
+                    ViewProfile(); // Refresh the profile data
+                })
+                .catch(error => {
+                    console.error('Error updating profile:', error);
+                    alert('Failed to update profile.');
+                });
+        }
+
+        document.getElementById('profileForm').addEventListener('submit', updateProfile);
+        ViewProfile();
+    });
+</script>
+</body>
+</html>

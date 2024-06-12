@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login here</title>
+    <link rel="stylesheet" href="css/login.css" />
+</head>
+<body>
+<div class="container">
+    <h1 style="text-align: center">Login</h1>
+    <hr />
+    <form id="loginForm" method="post" style="max-width: 600px; margin: 0 auto;"
+          th:action="@{/userLogin}" th:object="${userLoginDto}" onsubmit=" return login()">
+        <label for="mobileNumber"><b>Mobile Number</b></label>
+        <input type="number" placeholder="Enter MobileNumber" name="mobileNumber" id="mobileNumber" required="required" />
+
+        <label for="Password"><b>Password</b></label>
+        <input type="password" placeholder="Enter Password" name="Password" id="Password" required="required" />
+
+        <button type="submit" class="login">Login</button>
+    </form>
+    <hr />
+</div>
+<script>
+    function login() {
+        // Get the mobile number from the form
+        const mobileNumber = document.getElementById("mobileNumber").value;
+        localStorage.setItem("mobileNumber", mobileNumber);
+
+        // Continue with form submission
+        return true;
+    }
+</script>
+</body>
+</html>

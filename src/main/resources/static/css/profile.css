@@ -1,0 +1,112 @@
+body {
+    margin: 0;
+    font-family: "Lato", sans-serif;
+}
+
+.sidebar {
+    margin: 0;
+    padding: 4rem 0;
+    width: 200px;
+    background-color:#000000;
+    color: #ffffff;
+    position: fixed;
+    height: 100%;
+    overflow: auto;
+}
+
+.sidebar a {
+    display: block;
+    color: #ffffff;
+    padding: 16px;
+    text-decoration: none;
+}
+
+.sidebar a.active {
+    background-color: rgba(182, 177, 177, 0.49);
+    color: white;
+}
+input[type=text],input[type=email],input[type=number]{
+    width: 50%;
+    padding: 1rem;
+    margin: 0 0 1rem;
+    /* margin: 2rem 0; */
+    display: block;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    background: #f1f1f1;
+}
+.userDetailsForm{
+    width: 59rem;
+    height: 30rem;
+    margin: 5rem 39rem;
+}
+.updateBtn{
+    width: 31.5rem;
+    padding: 1rem;
+    margin: 0 0 1rem
+}
+.sidebar a:hover:not(.active) {
+    background-color: #5a5a5a;
+    color: white;
+}
+@media screen and (max-width: 700px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+    .sidebar a {float: left;}
+    div.content {margin-left: 0;}
+}
+
+@media screen and (max-width: 400px) {
+    .sidebar a {
+        text-align: center;
+        float: none;
+    }
+}
+.userImg{
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+    margin: 0.5rem 0;
+}
+.userData{
+    font-weight: bold;
+    padding: 0.5rem;
+}
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    width: 87vw;
+    height: 9vh;
+    display: flex;
+    justify-content: end;
+    align-items: flex-end;
+    color: #ffffff;
+    margin: 0 12.5rem;
+    text-align: center;
+    background-color: #000000;
+}
+button {
+    border: none;
+    outline: 0;
+    display: inline-block;
+    padding: 8px;
+    color: white;
+    background-color: #000;
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+    font-size: 18px;
+}
+
+a {
+    text-decoration: none;
+    font-size: 22px;
+    color: black;
+}
+
+button:hover, a:hover {
+    opacity: 0.7;
+}

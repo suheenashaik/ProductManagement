@@ -1,0 +1,55 @@
+.container
+{
+    border: 1px solid #f1f1f1;
+    margin-top: 250px;
+    margin-left: 370px;
+    margin-bottom: 10px;
+    width: 50%;
+    height: 50%;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.custregisterbtn {
+    background-color: grey;
+    color: white;
+    padding: 16px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    opacity: 0.9;
+}
+
+.custregisterbtn:hover {
+    opacity: 1;
+}
+.pubregisterbtn{
+    background-color: grey;
+    color: white;
+    padding: 16px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    opacity: 0.9;
+}
+.pubregisterbtn{
+    opacity: 1;
+}
+
+.login{
+    background-color: grey;
+    color: white;
+    padding: 16px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    opacity: 0.9;
+}
+
+.login:hover{
+    opacity: 1;
+}
