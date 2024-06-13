@@ -1,5 +1,6 @@
 package com.example.productManagement.products.entity;
 
+import com.example.productManagement.products.util.Sizes;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,8 +18,9 @@ public class SizeQuantity {
     @Column(name = "size_quantity_id", nullable = false)
     private Long sizeQuantityId;
 
-    @Column(name = "size", nullable = false)
-    private String size;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "\"size\"", nullable = false)
+    private Sizes size;
 
     @Column(name = "quantity", nullable = false)
     private Integer quantity;

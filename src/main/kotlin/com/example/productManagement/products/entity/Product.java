@@ -1,4 +1,7 @@
 package com.example.productManagement.products.entity;
+import com.example.productManagement.products.util.Category;
+import com.example.productManagement.products.util.ProductRelatedFor;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Data
-@Table(name = "product")
+@Table(name = "product_Table")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_seq")
@@ -19,11 +22,13 @@ public class Product {
     @Column(name = "product_name", nullable = false)
     private String productName;
 
-    @Column(name = "product_related_for")
-    private String productRelatedFor;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "product_category")
+    private Category productCategory;
 
-    @Column(name = "product_category_name")
-    private String productCategoryName;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "product_related_for")
+    private ProductRelatedFor productRelatedFor;
 
     @Column(name = "brand")
     private String brand;
@@ -37,7 +42,9 @@ public class Product {
     @Column(name = "selling_price")
     private Long sellingPrice;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "product_id")
-    private List<Color> color;
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "product",fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<Color> colors;
+
+
 }
