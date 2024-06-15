@@ -19,4 +19,8 @@ public interface ProductsRepository extends JpaRepository<Product,Long> {
     @Query("SELECT u FROM Product u WHERE UPPER(u.productRelatedFor) = UPPER(:ProductRelatedFor)")
     List<Product> findProductsByRelatedFor(@Param("ProductRelatedFor") String ProductRelatedFor);
 
+    @Query("SELECT u FROM Product u WHERE LOWER(u.brand) LIKE LOWER(CONCAT('%', :brandName, '%'))")
+    List<Product> findProductsByBrand(@Param("brandName") String brandName);
+
+
 }

@@ -14,8 +14,8 @@ public class ProductsController {
     @Autowired
     private ProductsService productsService;
 
-    @PostMapping("/addProduct")
-    public void addProduct(@RequestBody ProductRequestDto productReqDto) {
+    @PostMapping("/createProduct")
+    public void createProduct(@RequestBody ProductRequestDto productReqDto) {
         this.productsService.createProduct(productReqDto);
     }
 
@@ -40,4 +40,10 @@ public class ProductsController {
     public List<ProductResponseDto> getProductsByRelatedFor( @PathVariable String productRelatedFor){
         return this.productsService.getProductsByRelatedFor(productRelatedFor);
     }
+    @GetMapping("/getProductsByBrand/{brand}")
+    public List<ProductResponseDto> getProductsByBrand( @PathVariable String brand){
+        return this.productsService.getProductsByBrand(brand);
+    }
+
+
 }

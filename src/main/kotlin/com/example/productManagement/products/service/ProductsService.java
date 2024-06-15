@@ -100,5 +100,12 @@ public class ProductsService extends ProductServiceImpl {
         }
         return null;
     }
+    public List<ProductResponseDto> getProductsByBrand(String brand) {
+        List<Product> products=this.productRepository.findProductsByBrand(brand);
+        if(!products.isEmpty()){
+            return streamProducts(products);
+        }
+        return null;
+    }
 
 }
