@@ -41,12 +41,14 @@ public class WebController {
     public String publisherHome( ) {
         return "publisher_Home";
     }
+
     @GetMapping("/profile")
     public String showProfile( ) {
         return "profile";
     }
-   /* @GetMapping("/viewProfile/{mobile}")
-    public PublisherProfileDto viewProfile(@PathVariable String mobile) {
-        return this.publisherService.viewProfile(mobile);
-    }*/
+
+    @GetMapping("/createProduct")
+    public String createProduct() {
+        return "create_Product";
+    }
 }

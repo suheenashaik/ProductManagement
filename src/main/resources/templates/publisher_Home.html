@@ -9,7 +9,7 @@
 <body>
 <div class="sidebar">
     <a class="active" href="publisher_Home">Home</a>
-    <a href="#">Create Products</a>
+    <a href="/createProduct">Create Products</a>
     <a href="#">View Products</a>
     <a href="#">View orders</a>
     <a id="profile-link" href="profile">Profile</a>
@@ -29,16 +29,16 @@
     <p>We have also added a media query for screens that are 400px or less, which will vertically stack and center the navigation links.</p>
     <h3>Resize the browser window to see the effect.</h3>
 </div>
-
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        function ViewUserDetails() {
-            const mobileNumber = localStorage.getItem('mobile');
+        function ViewProfile() {
+            const mobileNumber = localStorage.getItem('mobileNumber');
             if (!mobileNumber) {
                 alert('Mobile number not found. Please login again.');
                 window.location.href = '/login.html';
                 return;
             }
+
             fetch(`http://localhost:8090/profiles/viewProfile/${mobileNumber}`)
                 .then(response => response.json())
                 .then(data => {
@@ -46,15 +46,16 @@
                     document.getElementById('userRole').textContent = data.role;
                 })
                 .catch(error => {
-                    console.error('Error fetching profile:', error);
-                    alert('Failed to fetch profile data.');
+                    // console.error('Error fetching profile:', error);
+                    // alert('Failed to fetch profile data.');
                 });
         }
 
-        ViewUserDetails();
+        // Call the ViewProfile function after defining it
+        ViewProfile();
     });
 
-</script>
 
+</script>
 </body>
 </html>

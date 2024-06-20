@@ -28,18 +28,22 @@ public class ProductsController {
     public ProductResponseDto getProductById( @PathVariable Long productId) {
         return this.productsService.getProductById(productId);
     }
+
     @GetMapping("/getProductsByName/{productName}")
     public List<ProductResponseDto> getProductsByName( @PathVariable String productName){
        return this.productsService.getProductsByName(productName);
     }
+
     @GetMapping("/getProductsByCategory/{productCategory}")
     public List<ProductResponseDto> getProductsByCategory( @PathVariable String productCategory){
         return this.productsService.getProductsByCategory(productCategory);
     }
+
     @GetMapping("/getProductsByRelatedFor/{productRelatedFor}")
     public List<ProductResponseDto> getProductsByRelatedFor( @PathVariable String productRelatedFor){
         return this.productsService.getProductsByRelatedFor(productRelatedFor);
     }
+
     @GetMapping("/getProductsByBrand/{brand}")
     public List<ProductResponseDto> getProductsByBrand( @PathVariable String brand){
         return this.productsService.getProductsByBrand(brand);

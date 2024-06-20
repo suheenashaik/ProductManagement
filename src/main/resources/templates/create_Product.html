@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/create_Product.css" />
+    <title>Creation of Product</title>
+</head>
+<body>
+<div class="sidebar">
+    <a href="/publisher_Home">Home</a>
+    <a class="active" href="/createProduct">Create Products</a>
+    <a href="#">View Products</a>
+    <a href="#">View Orders</a>
+    <a id="profile-link"  href="/profile">Profile</a>
+</div>
+
+<div class="card profileHeader">
+    <img class="userImg" src="images/user (1).png" alt="image">
+    <div class="userData">
+        <h3 style="margin-bottom: 0.2rem" id="fullName">John Doe</h3>
+        <small id="userRole">Publisher</small>
+    </div>
+</div>
+
+<div class="container createProduct">
+    <form id="productCreationForm">
+        <label for="productName"><b>Product Name</b></label>
+        <input type="text" name="productName" id="productName" required />
+
+        <!--<label for="productCategory"><b>product Category</b></label>
+        <input type="text" name="productCategory" id="productCategory" required />-->
+
+        <label for="productCategory"><b>Product Category</b></label>
+        <select  name="Category" id="productCategory">
+            <option value="WOMEN">WOMEN</option>
+            <option value="MEN">MEN</option>
+        </select>
+
+        <label for="productRelatedFor"><b>Product RelatedFor</b></label>
+        <select  name="RelatedFor" id="productRelatedFor">
+            <option value="SAREE">SAREE</option>
+            <option value="KURTHA">KURTHA</option>
+            <option value="SHIRT">SHIRT</option>
+            <option value="JEANS">JEANS</option>
+            <option value ="TOPS">TOPS</option>
+        </select>
+
+        <label for="brand"><b>Brand</b></label>
+        <input type="text" name="brand" id="brand" required  />
+
+        <label for="productMRP"><b>Product MRP</b></label>
+        <input type="number" name="productMRP" id="productMRP" required />
+
+        <label for="discount"><b>Discount</b></label>
+        <input type="number" name="discount" id="discount" required />
+
+        <label for="sellingPrice"><b>Selling Price</b></label>
+        <input type="number" name="sellingPrice" id="sellingPrice" required />
+
+        <div id="colorsContainer">
+            <div class="color-entry">
+                <h2>Color 1</h2>
+                <label for="colorName1">Color Name:</label>
+                <select  name="colors[0][colorName]" id="colorName1" class="colorName">
+                    <option value="RED">RED</option>
+                    <option value="GREEN">GREEN</option>
+                    <option value="BLUE">BLUE</option>
+                    <option value="YELLOW">YELLOW</option>
+                    <option value ="BLACK">BLACK</option>
+                    <option value ="WHITE">WHITE</option>
+                </select>
+
+                <div class="sizesContainer">
+                    <div class="size-entry">
+                        <label for="size1_1">Size:</label>
+                        <select  name="colors[0][sizes][0][size]" id="size1_1" class="sizeName">
+                            <option value="XS">XS</option>
+                            <option value="S">S</option>
+                            <option value="M">M</option>
+                            <option value="L">L</option>
+                            <option value ="XL">XL</option>
+                            <option value ="XXL">XXL</option>
+                        </select>
+                        <label for="quantity1_1">Quantity:</label>
+                        <input type="number" id="quantity1_1" name="colors[0][sizes][0][quantity]" required>
+                    </div>
+                </div>
+
+                <button type="button" class="addSizeBtn" data-color-index="0">Add Size</button>
+
+            </div>
+        </div>
+        <button type="button" class="addColorBtn" id="addColorBtn">Add Color</button>
+
+<br>
+        <button type="submit" class="saveProductBtn">Save Product</button>
+    </form>
+</div>
+
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        function ViewProfile() {
+            const mobileNumber = localStorage.getItem('mobileNumber');
+            if (!mobileNumber) {
+                alert('Mobile number not found. Please login again.');
+                window.location.href = '/login.html';
+                return;
+            }
+
+            fetch(`http://localhost:8090/profiles/viewProfile/${mobileNumber}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('fullName').textContent = data.fullName;
+                    document.getElementById('userRole').textContent = data.role;
+                })
+                .catch(error => {
+                    // console.error('Error fetching profile:', error);
+                    // alert('Failed to fetch profile data.');
+                });
+        }
+
+        // Call the ViewProfile function after defining it
+        ViewProfile();
+
+        // Code for managing colors and sizes input fields
+        let colorCounter = 1;
+        let sizeCounters = [1];
+
+        const colorsContainer = document.getElementById('colorsContainer');
+        const addColorBtn = document.getElementById('addColorBtn');
+        const addSizeBtn=document.getElementById('addSizeBtn');
+        const productForm = document.getElementById('productCreationForm');
+
+        document.querySelector('.addSizeBtn[data-color-index="0"]').addEventListener('click', () => addSize(0));
+
+        // Add new color section
+        addColorBtn.addEventListener('click', () => {
+            colorCounter++;
+            sizeCounters.push(1);
+
+            const colorEntry = document.createElement('div');
+            colorEntry.className = 'color-entry';
+            colorEntry.innerHTML = `
+            <h2>Color ${colorCounter}</h2>
+            <label for="colorName${colorCounter}">Color Name:</label>
+                <select  name="colors[${colorCounter - 1}][colorName]" id=colorName${colorCounter}" class="colorName">
+                    <option value="RED">RED</option>
+                    <option value="GREEN">GREEN</option>
+                    <option value="BLUE">BLUE</option>
+                    <option value="YELLOW">YELLOW</option>
+                    <option value ="BLACK">BLACK</option>
+                    <option value ="WHITE">WHITE</option>
+                </select>
+
+            <div class="sizesContainer">
+                <div class="size-entry">
+                    <label for="size${colorCounter}_1">Size:</label>
+                     <select  name="colors[${colorCounter - 1}][sizes][0][size]" id="size${colorCounter}_1" class="sizeName">
+                            <option value="XS">XS</option>
+                            <option value="S">S</option>
+                            <option value="M">M</option>
+                            <option value="L">L</option>
+                            <option value ="XL">XL</option>
+                            <option value ="XXL">XXL</option>
+                        </select>
+                    <label for="quantity${colorCounter}_1">Quantity:</label>
+                    <input type="number" id="quantity${colorCounter}_1" name="colors[${colorCounter - 1}][sizes][0][quantity]" required>
+                </div>
+            </div>
+
+            <button type="button" class="addSizeBtn">Add Size</button>
+        `;
+            colorsContainer.appendChild(colorEntry);
+
+            const addSizeBtn = colorEntry.querySelector('.addSizeBtn');
+            addSizeBtn.addEventListener('click', () => addSize(colorCounter - 1));
+        });
+
+        // Add new size entry within a color section
+        function addSize(colorIndex) {
+            const sizeCounter = ++sizeCounters[colorIndex];
+            const sizesContainer = document.querySelector(`.color-entry:nth-child(${colorIndex + 1}) .sizesContainer`);
+            const sizeEntry = document.createElement('div');
+            sizeEntry.className = 'size-entry';
+            sizeEntry.innerHTML = `
+            <label for="size${colorIndex + 1}_${sizeCounter}">Size:</label>
+             <select  name="colors[${colorIndex}][sizes][${sizeCounter - 1}][size]"  id="size${colorIndex + 1}_${sizeCounter}"  class="sizeName">
+                            <option value="XS">XS</option>
+                            <option value="S">S</option>
+                            <option value="M">M</option>
+                            <option value="L">L</option>
+                            <option value ="XL">XL</option>
+                            <option value ="XXL">XXL</option>
+                        </select>
+            <label for="quantity${colorIndex + 1}_${sizeCounter}">Quantity:</label>
+            <input type="number" id="quantity${colorIndex + 1}_${sizeCounter}" name="colors[${colorIndex}][sizes][${sizeCounter - 1}][quantity]" required>
+        `;
+            sizesContainer.appendChild(sizeEntry);
+        }
+
+        // Handle form submission
+        productForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const formData = {
+                productName: document.getElementById('productName').value,
+                productCategory: document.getElementById('productCategory').value,
+                productRelatedFor: document.getElementById('productRelatedFor').value,
+                brand: document.getElementById('brand').value,
+                productMRP: document.getElementById('productMRP').value,
+                discount: document.getElementById('discount').value,
+                sellingPrice: document.getElementById('sellingPrice').value,
+                colors: []
+            };
+
+            document.querySelectorAll('.color-entry').forEach((colorEntry, colorIndex) => {
+                const colorName = colorEntry.querySelector('.colorName').value;
+                const sizeQuantities = [];
+                colorEntry.querySelectorAll('.size-entry').forEach((sizeEntry, sizeIndex) => {
+                    const size = sizeEntry.querySelector('.sizeName').value;
+                    const quantity = sizeEntry.querySelector('input[type="number"]').value;
+                    sizeQuantities.push({ size, quantity });
+                });
+                formData.colors.push({ colorName, sizeQuantities }); // Match backend expectation
+            });
+
+            fetch('http://localhost:8090/products/createProduct', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    alert('Product created successfully!');
+                    productForm.reset();
+                    colorsContainer.innerHTML = '';
+                    colorCounter = 1;
+                    sizeCounters = [1];
+                })
+                .catch(error => {
+                    console.error('Error creating product:', error);
+                    alert('Failed to create product.');
+                });
+        });
+        });
+    </script>
+</body>
+</html>

@@ -9,7 +9,7 @@
 <body>
 <div class="sidebar">
     <a href="/publisher_Home">Home</a>
-    <a href="#">Create Products</a>
+    <a href="/createProduct">Create Products</a>
     <a href="#">View Products</a>
     <a href="#">View Orders</a>
     <a id="profile-link" class="active" href="/profile">Profile</a>
@@ -47,7 +47,7 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         function ViewProfile() {
-            const mobileNumber = localStorage.getItem('mobile');
+            const mobileNumber = localStorage.getItem('mobileNumber');
             if (!mobileNumber) {
                 alert('Mobile number not found. Please login again.');
                 window.location.href = '/login.html';
